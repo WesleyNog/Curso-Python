@@ -1,12 +1,31 @@
 print('ANÁLISE DE EMPRÉSTIMO')
 
 nome = input('Nome: ')
-nascimento = input('Nascimento: ')
-emprego = input('Trabalha? ')
-if  emprego == 'Sim':
-    renda = input('Salário: ')
+while True:
+    cpf = input('CPF: ')
+    if cpf.isnumeric():
+        break
+cpf_editado = f'{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:11]}'
+
+while True:
+    nascimento = input('Nascimento: ')
+    if nascimento.isnumeric():
+        break
+
+while True:
+    emprego = input('Trabalha? [S]im|[N]ão: ')
+    if emprego.title() == 'Sim' or emprego.title() == 'Não':
+        break
+
+if emprego.title() == 'Sim':
+    while True:
+        renda = input('Salário: ')
+        if renda.isnumeric():
+            break
 else:
     renda = 0
+
+
 estado_civil = input('Estado Civil: ')
 filhos = input('Tem filhos? ')
 if filhos == "Sim":
@@ -20,7 +39,7 @@ renda = float(renda)
 n_de_filhos = int(n_de_filhos)
 
 
-if idade >= 18 and idade <= 40 and emprego == 'Sim' and renda > margem_minima:
+if idade >= 18 and idade <= 40 and emprego.title() == 'Sim' and renda > margem_minima:
     valor_emprestimo = input('Valor do Empréstimo: ')
 else:
     valor_emprestimo = 0
@@ -47,8 +66,11 @@ if estado_civil != 'Sim' and filhos != 'Sim':
     divida_emprestimo = valor_emprestimo * juros + valor_emprestimo
     valor_parcela = divida_emprestimo / parcela_emprestimo
 
-    print(divida_emprestimo)
-    print(valor_parcela)
+    print()
+    print(f'Nome: {nome.title()}')
+    print(f'CPF: {cpf_editado}')
+    print(f'R$ {divida_emprestimo:.2f}')
+    print(f'R$ {valor_parcela:.2f}')
 else:
     parcela_emprestimo = input('Parcela: ')
     parcela_emprestimo = float(parcela_emprestimo)
@@ -56,5 +78,10 @@ else:
     divida_emprestimo = valor_emprestimo * juros + valor_emprestimo
     valor_parcela = divida_emprestimo / parcela_emprestimo
 
-    print(divida_emprestimo)
-    print(valor_parcela)
+    print()
+    print(f'Nome: {nome.title()}')
+    print(f'CPF: {cpf_editado}')
+    print(f'R$ {divida_emprestimo:.2f}')
+    print(f'R$ {valor_parcela:.2f}')
+
+
