@@ -10,6 +10,7 @@ alfabeto_portugues = lista1.split(' ')
 # ['n','ν'],['o','ξ'],['p','ο'],['q','π'],['r','ρ'],['s','σ'],
 # ['t','τ'],['u','υ'],['v','φ'],['x','χ'],['w','ω'],['y','ψ']]
 
+# com metodo
 def traduzir(texto)
   traduzido = ''
   for letra in texto
@@ -32,4 +33,17 @@ def traduzir(texto)
       indice += 1
 
 alfabeto_traduzido = traduzir('wesley')
+# fim com metodo
 
+# sem metodo
+texto = 'wesley
+traduzido = ''
+for letra in texto
+  indice = alfabeto_portugues.index(letra)
+  if indice
+    traduzido += alfabeto_grego[indice]
+  else
+    traduzido += letra
+
+alfabeto_traduzido = traduzido  
+# sem metodo
