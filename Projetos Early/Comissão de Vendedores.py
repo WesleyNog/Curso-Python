@@ -14,9 +14,9 @@ while True:
         venda = input('Valor da Venda: ')
         if not venda.isalpha():
             venda = float(venda)
-            break
         else:
             print('APENAS NÚMEROS!')
+            continue
         print(f'A comissão da {vendedora} é de R$ {venda * float(taxa_comissao):.2f}')
     else:
 
