@@ -3,6 +3,7 @@ print()
 
 meta_loja = 50000
 taxa_comissao = ''
+total_venda = []
 y = 0
 
 qnt_vendedora = int(input('Quantas vendedoras? '))
@@ -20,6 +21,9 @@ while y < qnt_vendedora:
     elif venda > 50000:
         taxa_comissao = 0.03
     print(f'A comissão da {vendedora} é de R$ {venda * float(taxa_comissao):.2f}')
+    total_venda.append(venda)
     y += 1
-    
+
+print()
+print('O valor total é R$%.2f'%sum(total_venda))
 print('Fim!')
