@@ -8,7 +8,6 @@ y = 0
 
 qnt_vendedora = int(input('Quantas vendedoras? '))
 while True:
-  while True:
     if qnt_vendedora >= y:
         loja = input('Loja: ')
         vendedora = input('Vendedor(a): ')
@@ -20,15 +19,20 @@ while True:
             print('APENAS NÚMEROS!')
         print(f'A comissão da {vendedora} é de R$ {venda * float(taxa_comissao):.2f}')
     else:
-        print(f'O total de vendas é de R$ {venda * float(taxa_comissao):.2f}')
+
     y += 1
 
     
-    if venda <= 25000:
+    if venda <= 25000.0:
         taxa_comissao = 0.007
-    elif venda >= 25000 and venda <= 35000:
+    elif venda >= 25000.0 and venda <= 35000.0:
         taxa_comissao = 0.011
-    elif venda >= 35000 and venda <= 50000:
+    elif venda >= 35000.0 and venda <= 50000.0:
         taxa_comissao = 0.025
-    elif venda > 50000:
+    else:
         taxa_comissao = 0.03
+
+    print(f'{venda}')
+    print(f'{taxa_comissao}')
+    print(f'O total de vendas é de R$ {venda * float(taxa_comissao):.2f}')
+    
