@@ -8,6 +8,7 @@ y = 0
 
 qnt_vendedora = int(input('Quantas vendedoras? '))
 while True:
+  while True:
     if qnt_vendedora >= y:
         loja = input('Loja: ')
         vendedora = input('Vendedor(a): ')
