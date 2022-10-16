@@ -3,20 +3,28 @@ print()
 
 def calculo():
     print(f'A comissão da {vendedora} é de R$ {venda * float(taxa_comissao):.2f}')
+    print('-' * 30)
 
-def valor_total():
+def resultado():
+    print()
     print(f'O total da {loja} é R$ {sum(total_venda)}')
     print(f'A comissão da {loja} é R$ {sum(total_venda) * 0.015}')
+    print('Fim!')
 
 meta_loja = 50000
 taxa_comissao = ''
+texto = ''
+vendedoras = []
 total_venda = []
+lojas = []
 y = 0
 
 qnt_vendedora = int(input('Quantas vendedoras? '))
-while y < qnt_vendedora: 
+while y < qnt_vendedora:
     loja = input('Loja: ')
+    lojas.append(loja)
     vendedora = input('Vendedor(a): ')
+    vendedoras.append(vendedora)
     venda = input('Valor da Venda: ')
     venda = float(venda)
     if venda <= 25000:
@@ -31,6 +39,7 @@ while y < qnt_vendedora:
     total_venda.append(venda)
     y += 1
 
-print()
-valor_total()
-print('Fim!')
+for a, b in zip(vendedoras, total_venda):
+    texto += f'\nA comissão de {a} é R$ {b}'
+print(texto)
+resultado()
