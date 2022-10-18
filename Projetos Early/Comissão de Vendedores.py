@@ -8,8 +8,8 @@ y = 0
 print('COMISÃO')
 print()
 
-def calculo(vendedora, venda, taxa_comissao):
-    print(f'A comissão da {vendedora} é de R$ {(venda * taxa_comissao):.2f}')
+def calculo(vendedora, venda):
+    print(f'A comissão da {vendedora} é de R$ {calcular_comissao(venda):.2f}')
     print('-' * 30)
 
 
@@ -19,6 +19,9 @@ def resultado():
     print(f'A comissão da {loja} é R$ {sum(total_venda) * 0.015:.2f}')
     print('Fim!')
 
+def calcular_comissao(venda):
+    venda * comissao(venda)
+    
 def comissao(venda):
     if venda <= 25000:
         0.007
@@ -46,10 +49,8 @@ while y < qnt_vendedora:
     # solicitar valor da venda
     venda = input('Valor da Venda: ')
     venda = float(venda)
-    # calcula comissao da vendedora
-    taxa_comissao = comissao()
     # exibir comissao da vendadora
-    calculo(vendedora, taxa_comissao)
+    calculo(vendedora, venda)
     total_venda.append(venda)
     y += 1
 
