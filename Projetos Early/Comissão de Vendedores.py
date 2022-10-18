@@ -8,8 +8,8 @@ y = 0
 print('COMISÃO')
 print()
 
-def calculo(vendedora, taxa_comissao):
-    print(f'A comissão da {vendedora} é de R$ {taxa_comissao:.2f}')
+def calculo(vendedora, venda, taxa_comissao):
+    print(f'A comissão da {vendedora} é de R$ {(venda * taxa_comissao):.2f}')
     print('-' * 30)
 
 
