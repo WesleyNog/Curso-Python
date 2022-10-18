@@ -20,17 +20,18 @@ def resultado():
     print('Fim!')
 
 def calcular_comissao(venda):
-    venda * comissao(venda)
+    return venda * comissao(venda)
     
 def comissao(venda):
     if venda <= 25000:
-        0.007
+        return 0.007
     elif venda >= 25000 and venda <= 35000:
-        0.011
+        return 0.011
     elif venda >= 35000 and venda <= 50000:
-        0.025
-    elif venda > 50000:
-        0.03
+        return 0.025
+    else:
+        return 0.03
+
 
 def ler_string(texto):
     str = ''
