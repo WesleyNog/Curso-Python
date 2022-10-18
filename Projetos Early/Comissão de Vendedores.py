@@ -1,9 +1,15 @@
+meta_loja = 50000
+texto = ''
+vendedoras = []
+total_venda = []
+lojas = []
+y = 0
+
 print('COMISÃO')
 print()
 
-
-def calculo():
-    print(f'A comissão da {vendedora} é de R$ {comissao():.2f}')
+def calculo(vendedora, taxa_comissao):
+    print(f'A comissão da {vendedora} é de R$ {taxa_comissao:.2f}')
     print('-' * 30)
 
 
@@ -13,36 +19,37 @@ def resultado():
     print(f'A comissão da {loja} é R$ {sum(total_venda) * 0.015:.2f}')
     print('Fim!')
 
-
-def comissao():
+def comissao(venda):
     if venda <= 25000:
-        taxa_comissao = 0.007
+        0.007
     elif venda >= 25000 and venda <= 35000:
-        taxa_comissao = 0.011
+        0.011
     elif venda >= 35000 and venda <= 50000:
-        taxa_comissao = 0.025
+        0.025
     elif venda > 50000:
-        taxa_comissao = 0.03
-    return venda * taxa_comissao
+        0.03
 
-meta_loja = 50000
-taxa_comissao = ''
-texto = ''
-vendedoras = []
-total_venda = []
-lojas = []
-y = 0
+def ler_string(texto):
+    str = ''
+    while (size(str) < 3):
+        str = input(texto)
+    return str
 
 qnt_vendedora = int(input('Quantas vendedoras? '))
 while y < qnt_vendedora:
-    loja = input('Loja: ')
+    # solicitar nome da loja
+    loja = ler_string('Loja: ')
     lojas.append(loja)
-    vendedora = input('Vendedor(a): ')
+    # solicitar nome da vendadora
+    vendedora = ler_string('Vendedor(a): ')
     vendedoras.append(vendedora)
+    # solicitar valor da venda
     venda = input('Valor da Venda: ')
     venda = float(venda)
-    comissao()
-    calculo()
+    # calcula comissao da vendedora
+    taxa_comissao = comissao()
+    # exibir comissao da vendadora
+    calculo(vendedora, taxa_comissao)
     total_venda.append(venda)
     y += 1
 
