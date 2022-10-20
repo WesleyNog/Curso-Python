@@ -35,7 +35,7 @@ def comissao(venda):
 
 def ler_string(texto):
     str = ''
-    while (size(str) < 3):
+    while (len(str) < 3):
         str = input(texto)
     return str
 
@@ -56,6 +56,6 @@ while y < qnt_vendedora:
     y += 1
 
 for a, b in zip(vendedoras, total_venda):
-    texto += f'\nA comissão de {a} é R$ {b}'
+    texto += f'\nA comissão de {a} é R$ {b * comissao(venda):.2f}'
 print(texto)
 resultado()
