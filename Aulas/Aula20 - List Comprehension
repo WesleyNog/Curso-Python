@@ -22,3 +22,32 @@ ex6 = [v for v in l3 if v % 3 == 0 if v % 8 == 0]
 ex7 = [v if v % 3 == 0 and v % 8 == 0 else 0 for v in l3]
 
 print(ex7)
+
+#LIST COMPREHENSION 02
+
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+novos_numeros = [numero for numero in numeros if numero > 5]
+impares = [numero for numero in numeros if numero % 2 != 0]
+pares = [numero for numero in numeros if numero % 2 == 0]
+outro_if = [
+    numero
+    if numero != 6 else 600
+    for numero in pares
+]
+
+print(numeros)
+print(novos_numeros)
+print(impares)
+print(pares)
+print(outro_if)
+
+#LIST COMPREHENSION 03
+
+nomes = ['wesley', 'naiara', 'helloa', 'eurides']
+novos_nomes = [f'{nome[:-1]}{nome[-1].upper()}' for nome in nomes]
+
+print(novos_nomes)
+
+numeros = [[numero, numero ** 2] for numero in range(10)]
+
+print(numeros)
