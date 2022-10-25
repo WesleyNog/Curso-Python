@@ -1,4 +1,4 @@
-from itertools import count
+from itertools import count, combinations, permutations, product
 
 # Primeiro Exemplo
 contador = count()
@@ -14,3 +14,11 @@ for valor in contador2:
 
     if valor >= 10:
         break
+
+
+# Combinations
+contador = count()
+lista = ['wesley', 'naiara', 'helloa', 'eurides', 'valnides', 'valter', 'valjunior']
+
+for grupo in combinations(lista, 2):
+    print(grupo)
