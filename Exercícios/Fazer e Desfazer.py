@@ -1,26 +1,42 @@
+# lista de afazeres
+lista = []
+temp_list = []
 
-def refazer(tarefa, ta_exc):
-    if not ta_exc:
-        print('Nada para refazer!')
-        return
+# Definindo afazeres
+def adicionar(acao):
+    if acao != 'desfazer' or 'refazer' or 'sair':
+        return lista.append(acao)
 
-    last_exc = ta_exc.pop()
-    tarefa.append(last_exc)
+# Logica de Desfazer e Refazer
+def undo_redo(acao):
+    if 'desfazer' in lista:
+        if not lista:
+            print('Nada para desfazer!')
+            print()
+        else:
+            temp_list.append(lista[-2])
+            lista.remove(temp_list[-1])
+    elif 'refazer' in lista:
+        if not temp_list:
+            print('Nada pra refazer!')
+            print()
+        else:
+            lista.append(temp_list[-1])
+            temp_list.pop()
 
-
-tarefa = []
-ta_exc = []
-
+# Código
 while True:
-    acao = input('Digite uma TAREFA ou [R]-Refazer [D]-Desfazer [M]-Mostrar [ENTER]-Sair: ').upper()
-    if acao == 'M':
-        mostrar_tarefa(tarefa)
-        continue
-    elif acao == 'D':
-        desfazer(tarefa, ta_exc)
-        continue
-    elif acao == 'R':
-        refazer(tarefa, ta_exc)
-        continue
+    comando = adicionar(input('Digite um comando: ').lower())
+    if 'sair' in lista:
+        break
 
-    add(acao, tarefa)
+
+    undo_redo(comando)
+    
+    if 'desfazer' in lista:
+        lista.remove('desfazer')
+    elif 'refazer' in lista:
+        lista.remove('refazer')
+
+    print(*lista, sep='\n')
+    print()
