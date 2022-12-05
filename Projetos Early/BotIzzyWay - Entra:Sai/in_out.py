@@ -1,7 +1,7 @@
 import func as f
 
 URL = 'https://app.izzyway.com.br/Account/Login#'
-LOGIN, PASSOWORD = 'adm4@briejer.com.br', '225368'
+LOGIN, PASSOWORD = '####@####.com.br', '####'
 
 
 f.driver.get(URL)
