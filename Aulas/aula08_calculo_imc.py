@@ -1,5 +1,5 @@
 nome = 'Wesley Nogueira'
-idade = 35
+idade = 36
 altura = 1.75
 peso = 65
 imc = peso / altura ** 2
