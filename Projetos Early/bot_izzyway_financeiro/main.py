@@ -3,7 +3,7 @@ from time import sleep
 from selenium.webdriver.common.by import By;
 
 URL = 'https://app.izzyway.com.br/Account/Login#'
-LOGIN, PASSOWORD = 'adm4@briejer.com.br', '223562'
+LOGIN, PASSOWORD = '############', '##########'
 
 
 f.driver.get(URL)
