@@ -30,7 +30,7 @@ lojas_xpaths = {
     # Escolher Unidade/Loja - MAISON
     'maison': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[5]/div/div/div/div[2]/strong',
     # Escolher Unidade/Loja - EVENTOS
-    'evento': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[2]/div/div/div/div[2]/strong',
+    'eventos': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[2]/div/div/div/div[2]/strong',
 }
 
 
@@ -67,6 +67,8 @@ cp_xpaths = {
     'historico': '//*[@id="Historico"]',
     # Inserir uma FORMA DE PAGAMENTO
     'forma_pagamento': '/html/body/div[1]/div/div/div[2]/form/div[14]/div/div/div[1]/select',
+    # Lista da FORMA DE PAGAMENTO
+    'lista_pagamento': '/html/body/div[1]/div/div/div[2]/form/div[14]/div/div/div[1]/select/option[$$NUMBER$$]',
     # Informar a DATA DO PAGAMENTO
     'data_pagamento': '//*[@id="PrevisaoData"]',
     # SALVAR o lançamento SEM FINALIZA-LO

@@ -1,31 +1,30 @@
-import func as f;
+import class_robot as cb;
 from time import sleep
-from selenium.webdriver.common.by import By;
 
 URL = 'https://app.izzyway.com.br/Account/Login#'
-LOGIN, PASSOWORD = '############', '##########'
+LOGIN, PASSOWORD = '##########', '#######'
 
 
-f.driver.get(URL)
+robo = cb.RoboIzzyWay()
+robo.driver.get(URL)
 
-f.logar(LOGIN, PASSOWORD)
+robo.logar(LOGIN, PASSOWORD)
+print('Logando...')
 sleep(10)
 try:
-    f.modulos('FINANCEIRO')
+    robo.modulos('FINANCEIRO')
 except:
-    f.driver.refresh()
+    robo.driver.refresh()
     print('ERROR: Falha no carregamento!')
     print('Retomando...')
     sleep(10)
-    f.modulos('FINANCEIRO')
-    
-try:
-    f.lancamento()
-    print(f'Todos os lancamentos foram realizados com sucesso!')
-except:
-    f.driver.refresh()
-    print('ERROR: Sem Lançamentos!')
-    print('Retomando...')
-    sleep(10)
-    f.lancamento()
+    robo.modulos('FINANCEIRO')
+
+print()
+print(f'Total de {robo.qnt_lancamento} existentes!')
+print('Realizando lancamentos!')
+print()
+robo.lancamento()
+robo.driver.quit()
+
 
