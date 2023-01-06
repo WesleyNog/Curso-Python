@@ -2,7 +2,7 @@ import class_robot as cb;
 from time import sleep
 
 URL = 'https://app.izzyway.com.br/Account/Login#'
-LOGIN, PASSOWORD = '######', '######'
+LOGIN, PASSOWORD = '###########', '#######'
 
 
 robo = cb.RoboIzzyWay()
@@ -26,5 +26,3 @@ print('Realizando lancamentos!')
 print()
 robo.lancamento()
 robo.driver.quit()
-
-
