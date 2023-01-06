@@ -18,7 +18,7 @@ LER = pd.read_excel(ARQUIVO)
 
 class RoboIzzyWay:
     def __init__(self) -> None:
-        self.driver = webdriver.Safari()
+        self.driver = webdriver.Firefox()
         self.qnt_lancamento = len(LER)
 
     
@@ -60,9 +60,9 @@ class RoboIzzyWay:
     def lancamento(self):
         
         count = 0
+        search_loja = self.driver.find_element(By.XPATH, '//*[@id="lblEstabelecimentoSelecionado"]').text
         # LOOP
         for i, row in LER.iterrows():
-            search_loja = self.driver.find_element(By.XPATH, '//*[@id="lblEstabelecimentoSelecionado"]').text
             if search_loja != str(row['LOJA']).upper():
                 lj01 = WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located((By.XPATH, lojas_xpaths['loja']))
@@ -77,12 +77,18 @@ class RoboIzzyWay:
                 lj02.click()
                 
                 sleep(10)
-
-            # Adicionar um novo LANCAMENTO do CONTAS A PAGAR
-            novo = WebDriverWait(self.driver, 30).until(
-                EC.presence_of_element_located((By.XPATH, cp_xpaths['novo_cp']))
-            )
-            novo.click()
+            try:
+                # Adicionar um novo LANCAMENTO do CONTAS A PAGAR
+                novo = WebDriverWait(self.driver, 30).until(
+                    EC.presence_of_element_located((By.XPATH, cp_xpaths['novo_cp']))
+                )
+                novo.click()
+            except TimeoutError:
+                sleep(10)
+                novo = WebDriverWait(self.driver, 30).until(
+                    EC.presence_of_element_located((By.XPATH, cp_xpaths['novo_cp']))
+                )
+                novo.click()
 
             # Escolha de Lancamento Simples
             simples = WebDriverWait(self.driver, 30).until(
@@ -111,24 +117,32 @@ class RoboIzzyWay:
             historico = self.driver.find_element(By.XPATH, cp_xpaths['historico']).send_keys(row['HISTORICO'], Keys.ENTER)
             forma_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['forma_pagamento'])
             forma_pagamento.click()
-            select_forma_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['lista_pagamento'].replace('$$NUMBER$$', str(row['COD - FP'])))
+            sleep(0.5)
+            select_forma_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['lista_pagamento'].replace('$$NUMBER$$', str(row['FORMA DE PAGAMENTO'])))
             select_forma_pagamento.click()
             data_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['data_pagamento']).send_keys(str(row['DATA DE PAGAMENTO']))
             salvar = self.driver.find_element(By.XPATH, cp_xpaths['salvar']).click()
             sleep(3)
             
 
-            ##carregando = self.driver.find_element(By.XPATH, '/html/body/div[5]/h2/h3')
-            ##campos_obrigatorios = self.driver.find_element(By.XPATH, '<div class="toast-message">Campo Participante obrigatório</div>')
-            ##savo_sucesso = self.driver.find_element(By.XPATH, '<div class="toast-message">Salvo com sucesso</div>')
+            ###carregando = self.driver.find_element(By.XPATH, '/html/body/div[5]/h2/h3')
+            ###campos_obrigatorios = self.driver.find_element(By.XPATH, '<div class="toast-message">Campo Participante obrigatório</div>')
+            ###savo_sucesso = self.driver.find_element(By.XPATH, '<div class="toast-message">Salvo com sucesso</div>')
             
+            search_loja = self.driver.find_element(By.XPATH, '//*[@id="lblEstabelecimentoSelecionado"]').text
             count += 1
-            if count > 0:
-                print(f'{str(count) + "º"} LANCAMENTO ✅ : Loja {str(search_loja).upper()} | Nº Doc {row["DOCUMENTO"]}')
-            else:
-                print('ERROR: Lançamento NÃO Finalizado. ❌')
 
-            sleep(3)
+            if count == (i + 1):
+                print(f'{str(count) + "º"} LANCAMENTO ✅ | Nº Doc {row["DOCUMENTO"]}')
+                print(f'Lançado na loja do {search_loja}.')
+            else:
+                print(f'ERROR: {str(i) + "º"} LANCAMENTO não realizado! ❌')
+
+            sleep(5)
+
+            #if self.driver.find_element(By.XPATH, '/html/body/div[5]/h2/h3'):
+            #    sleep(1)
+
         
         print('-' * 20)
         print()
