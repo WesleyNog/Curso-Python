@@ -18,7 +18,7 @@ LER = pd.read_excel(ARQUIVO)
 
 class RoboIzzyWay:
     def __init__(self) -> None:
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Safari()
         self.qnt_lancamento = len(LER)
 
     
