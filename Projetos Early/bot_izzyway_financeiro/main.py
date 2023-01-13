@@ -2,7 +2,7 @@ import class_robot as cb;
 from time import sleep
 
 URL = 'https://app.izzyway.com.br/Account/Login#'
-LOGIN, PASSOWORD = '###########', '#######'
+LOGIN, PASSOWORD = '##########', '#######'
 
 
 robo = cb.RoboIzzyWay()
@@ -21,8 +21,9 @@ except:
     robo.modulos('FINANCEIRO')
 
 print()
-print(f'Total de {robo.qnt_lancamento} existentes!')
+print(f'{robo.qnt_lancamento} LANÇAMENTOS existentes!')
 print('Realizando lancamentos!')
 print()
+
 robo.lancamento()
 robo.driver.quit()
