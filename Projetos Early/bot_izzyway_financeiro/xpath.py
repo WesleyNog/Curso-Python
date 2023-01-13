@@ -26,7 +26,7 @@ lojas_xpaths = {
     # Escolher Unidade/Loja - QUARTIER
     'quartier': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[6]/div/div/div/div[2]/strong',
     # Escolher Unidade/Loja - VICENTE LEITE
-    'vicente': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[8]/div/div/div/div[2]/strong',
+    'vicente leite': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[8]/div/div/div/div[2]/strong',
     # Escolher Unidade/Loja - MAISON
     'maison': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[2]/ul/li[5]/div/div/div/div[2]/strong',
     # Escolher Unidade/Loja - EVENTOS
@@ -36,9 +36,9 @@ lojas_xpaths = {
 
 cp_xpaths = {
     # Acessar o CONTAS A PAGAR
-    'contas_pagar': '/html/body/div[2]/nav/div[1]/ul/li[65]/a/i',
+    'contas_pagar': '/html/body/div[2]/nav/div[1]/ul/li[66]/a/i',
     # Acessar o CONTAS A RECEBER
-    'contas_receber': '/html/body/div[2]/nav/div[1]/ul/li[64]/a/i',
+    'contas_receber': '/html/body/div[2]/nav/div[1]/ul/li[65]/a/i',
     # Novo lancamento de CONTAS A PAGAR
     'novo_cp': '/html/body/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div[1]/button',
     # Inserção de LANCAMENTO SIMPLES
