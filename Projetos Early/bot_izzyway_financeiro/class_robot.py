@@ -7,18 +7,23 @@ from xpath import modulos_xpaths, lojas_xpaths, cp_xpaths;
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
+from datetime import datetime
 
 
 option = webdriver.FirefoxOptions()
+#option = webdriver.ChromeOptions()
 option.add_argument('--headless')
 
 # Arquivo que será usado para fazer todos os lançamentos necessários
-ARQUIVO = 'C:\\Users\\geren\\OneDrive\\Área de Trabalho\\TesteBot.xlsx'
+ARQUIVO = 'Y:\\AUTOMAÇÃO\\Contas a Pagar.xlsx'
 LER = pd.read_excel(ARQUIVO)
+LOG = 'Y:\\AUTOMAÇÃO\\log_contas.txt'
+
 
 class RoboIzzyWay:
     def __init__(self) -> None:
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Firefox(options=option)
+        #self.driver = webdriver.Chrome(options=option)
         self.qnt_lancamento = len(LER)
 
     
@@ -54,6 +59,15 @@ class RoboIzzyWay:
         ##if search_cp != 'Contas a Pagar':
         ##    access_cp = self.driver.find_element(By.XPATH, cp_xpaths['contas_pagar']).click()
         sleep(10)
+    
+    #############TESTANDO MÉDOTO################
+    def find_xpath(self, xpath):
+        try:
+            return self.driver.find_element(By.XPATH, xpath)
+        except:
+            print('ERROR: Elemento não encontrado! Retomando...')
+            sleep(10)
+            return self.driver.find_element(By.XPATH, xpath)
 
 
     # Acessar a Loja que ira ser feita a operação
@@ -98,30 +112,30 @@ class RoboIzzyWay:
             
             sleep(2)
 
-            # Lançamentos em Loop da Planilha em Excel
+            # Lançamentos em Loop da Planilha em Excel  cp_xpaths['plano_contas']
           
-            plano_contas = self.driver.find_element(By.XPATH, cp_xpaths['plano_contas']).send_keys(row['PLANO'], Keys.ENTER)
-            centro_resultados = self.driver.find_element(By.XPATH, cp_xpaths['centro_resultados']).send_keys('1', Keys.ENTER)
-            documento = self.driver.find_element(By.XPATH, cp_xpaths['documento']).send_keys(row['DOCUMENTO'], Keys.ENTER)
-            participante = self.driver.find_element(By.XPATH, cp_xpaths['participante']).send_keys(row['PARTICIPANTE'], Keys.ENTER)
+            plano_contas = self.find_xpath(cp_xpaths['plano_contas']).send_keys(row['PLANO'], Keys.ENTER)
+            centro_resultados = self.find_xpath(cp_xpaths['centro_resultados']).send_keys('1', Keys.ENTER)
+            documento = self.find_xpath(cp_xpaths['documento']).send_keys(row['DOCUMENTO'], Keys.ENTER)
+            participante = self.find_xpath(cp_xpaths['participante']).send_keys(row['PARTICIPANTE'], Keys.ENTER)
             sleep(1)
-            emissao = self.driver.find_element(By.XPATH, cp_xpaths['emissao'])
+            emissao = self.find_xpath(cp_xpaths['emissao'])
             emissao.click()
             emissao.clear()
             emissao.send_keys(str(row['EMISSAO']))
-            vencimento = self.driver.find_element(By.XPATH, cp_xpaths['vencimento'])
+            vencimento = self.find_xpath(cp_xpaths['vencimento'])
             vencimento.click()
             vencimento.clear()
             vencimento.send_keys(str(row['VENCIMENTO']))
-            valor = self.driver.find_element(By.XPATH, cp_xpaths['valor']).send_keys(row['VALOR'], Keys.ENTER)
-            historico = self.driver.find_element(By.XPATH, cp_xpaths['historico']).send_keys(row['HISTORICO'], Keys.ENTER)
-            forma_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['forma_pagamento'])
+            valor = self.find_xpath(cp_xpaths['valor']).send_keys(row['VALOR'], Keys.ENTER)
+            historico = self.find_xpath(cp_xpaths['historico']).send_keys(row['HISTORICO'], Keys.ENTER)
+            forma_pagamento = self.find_xpath(cp_xpaths['forma_pagamento'])
             forma_pagamento.click()
             sleep(0.5)
-            select_forma_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['lista_pagamento'].replace('$$NUMBER$$', str(row['FORMA DE PAGAMENTO'])))
+            select_forma_pagamento = self.find_xpath(cp_xpaths['lista_pagamento'].replace('$$NUMBER$$', str(row['FORMA DE PAGAMENTO'])))
             select_forma_pagamento.click()
-            data_pagamento = self.driver.find_element(By.XPATH, cp_xpaths['data_pagamento']).send_keys(str(row['DATA DE PAGAMENTO']))
-            salvar = self.driver.find_element(By.XPATH, cp_xpaths['salvar']).click()
+            data_pagamento = self.find_xpath(cp_xpaths['data_pagamento']).send_keys(str(row['DATA DE PAGAMENTO']))
+            salvar = self.find_xpath(cp_xpaths['salvar']).click()
             sleep(3)
             
 
@@ -129,14 +143,23 @@ class RoboIzzyWay:
             ###campos_obrigatorios = self.driver.find_element(By.XPATH, '<div class="toast-message">Campo Participante obrigatório</div>')
             ###savo_sucesso = self.driver.find_element(By.XPATH, '<div class="toast-message">Salvo com sucesso</div>')
             
-            search_loja = self.driver.find_element(By.XPATH, '//*[@id="lblEstabelecimentoSelecionado"]').text
+            current_date = datetime.now()
+            search_loja = self.find_xpath('//*[@id="lblEstabelecimentoSelecionado"]').text
             count += 1
 
             if count == (i + 1):
                 print(f'{str(count) + "º"} LANCAMENTO ✅ | Nº Doc {row["DOCUMENTO"]}')
                 print(f'Lançado na loja do {search_loja}.')
+                with open(LOG, 'a+') as arquivo:
+                    arquivo.write(f'{str(count) + "º"} LANCAMENTO OK! | Nº Doc {row["DOCUMENTO"]}\n')
+                    arquivo.write(f'Lançado na loja do {search_loja}.\n')
+                    arquivo.write(f'{current_date}\n')
+                    arquivo.write('\n')
+                    arquivo.write('-' * 20)
+                    arquivo.write('\n')
             else:
                 print(f'ERROR: {str(i) + "º"} LANCAMENTO não realizado! ❌')
+                arquivo.write(f'ERROR: {str(i) + "º"} LANCAMENTO não realizado!\n')
 
             sleep(5)
 
