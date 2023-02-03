@@ -1,4 +1,3 @@
-
 modulos_xpaths = {
     # Botão para abrir lista dos Módulos
     'modulo': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[3]/a/i',
