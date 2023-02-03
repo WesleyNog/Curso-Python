@@ -8,6 +8,15 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 
+# Importação de módulos para o envio de e-mail
+import smtplib
+import os
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE
+from email import encoders
+
 
 option = webdriver.FirefoxOptions()
 #option = webdriver.ChromeOptions()
@@ -21,7 +30,7 @@ LOG = 'Y:\\AUTOMAÇÃO\\log_contas.txt'
 
 class RoboIzzyWay:
     def __init__(self) -> None:
-        self.driver = webdriver.Firefox(options=option)
+        self.driver = webdriver.Firefox()
         #self.driver = webdriver.Chrome(options=option)
         self.qnt_lancamento = len(LER)
 
@@ -55,7 +64,6 @@ class RoboIzzyWay:
         access_cp = self.driver.find_element(By.XPATH, cp_xpaths['contas_pagar']).click()
         sleep(10)
     
-    #############TESTANDO MÉDOTO################
     def find_xpath(self, xpath):
         return WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located((By.XPATH, xpath))
@@ -116,3 +124,70 @@ class RoboIzzyWay:
         salvar = self.find_xpath(cp_xpaths['salvar']).click()
         sleep(3)
 
+    
+    def fill_in_release_pg(self, plano, documento, participante, data_emissao, data_vencimento, valor, historico, forma_pgto, data_pgto, conta):
+        # Lançamentos em Loop da Planilha em Excel  cp_xpaths['plano_contas']
+        
+        plano_contas = self.find_xpath(cp_xpaths['plano_contas']).send_keys(plano, Keys.ENTER)
+        centro_resultados = self.find_xpath(cp_xpaths['centro_resultados']).send_keys('1', Keys.ENTER)
+        documento = self.find_xpath(cp_xpaths['documento']).send_keys(documento, Keys.ENTER)
+        participante = self.find_xpath(cp_xpaths['participante']).send_keys(participante, Keys.ENTER)
+        sleep(1)
+        emissao = self.find_xpath(cp_xpaths['emissao'])
+        emissao.click()
+        emissao.clear()
+        emissao.send_keys(str(data_emissao), Keys.ENTER)
+        vencimento = self.find_xpath(cp_xpaths['vencimento'])
+        vencimento.click()
+        vencimento.clear()
+        vencimento.send_keys(str(data_vencimento), Keys.ENTER)
+        valor = self.find_xpath(cp_xpaths['valor']).send_keys(valor, Keys.ENTER)
+        historico = self.find_xpath(cp_xpaths['historico']).send_keys(historico, Keys.ENTER)
+        pago = self.find_xpath(cp_xpaths['pago']).click()
+        pago_forma_pagamento = self.find_xpath(cp_xpaths['pago_forma_pagamento'])
+        pago_forma_pagamento.click()
+        sleep(0.5)
+        pago_select_forma_pagamento = self.find_xpath(cp_xpaths['pago_lista_pagamento'].replace('&&NUMBER&&', str(forma_pgto)))
+        pago_select_forma_pagamento.click()
+        pago_data_pagamento = self.find_xpath(cp_xpaths['pago_data_pagamento']).send_keys(str(data_pgto), Keys.ENTER)
+        conta_financeira = self.find_xpath(cp_xpaths['conta_financeira'])
+        conta_financeira.click()
+        sleep(0.5)
+        select_conta_financeira = self.find_xpath(cp_xpaths['lista_conta_financeira'].replace('##NUMBER##', str(conta)))
+        select_conta_financeira.click()
+        salvar = self.find_xpath(cp_xpaths['salvar']).click()
+        sleep(3)
+
+
+    def send_mail(self, email, dia_hora):
+        sender_email = "###################"
+        receiver_email = email
+        password = "#########"
+
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = COMMASPACE.join([receiver_email])
+        msg['Subject'] = f'Lançamentos concluidos em: {dia_hora}'
+
+        # add message body
+        msg.attach(MIMEText("Segue em anexo o LOG dos lançamentos feitos!", "plain"))
+
+        # attach file
+        file_path = "Y:\\AUTOMAÇÃO\\log_contas.txt"
+        part = MIMEBase('application', "octet-stream")
+        part.set_payload(open(file_path, "rb").read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(file_path))
+        msg.attach(part)
+
+        try:
+            server = smtplib.SMTP("smtp.zoho.com", 587)
+            server.ehlo()
+            server.starttls()
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+            print("Email enviado com Sucesso")
+        except Exception as e:
+            print("Error:", e)
+        finally:
+            server.quit()
