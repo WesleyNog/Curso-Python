@@ -1,3 +1,4 @@
+
 modulos_xpaths = {
     # Botão para abrir lista dos Módulos
     'modulo': '/html/body/div[2]/div[1]/div[1]/nav/div/ul/li[3]/a/i',
@@ -64,14 +65,26 @@ cp_xpaths = {
     'acrescimo': '/html/body/div[1]/div/div/div[2]/form/div[9]/div/div/div[1]/input',
     # Campo para informar um HISTÓRICO
     'historico': '//*[@id="Historico"]',
+    # Marcar como pago caso precise!
+    'pago': '//*[@id="Pago"]',
     # Inserir uma FORMA DE PAGAMENTO
     'forma_pagamento': '/html/body/div[1]/div/div/div[2]/form/div[14]/div/div/div[1]/select',
     # Lista da FORMA DE PAGAMENTO
     'lista_pagamento': '/html/body/div[1]/div/div/div[2]/form/div[14]/div/div/div[1]/select/option[$$NUMBER$$]',
     # Informar a DATA DO PAGAMENTO
     'data_pagamento': '//*[@id="PrevisaoData"]',
+    # Inserir uma FORMA DE PAGAMENTO
+    'pago_forma_pagamento': '/html/body/div[1]/div/div/div[2]/form/div[13]/div/div/div[1]/select',
+    # Lista da FORMA DE PAGAMENTO
+    'pago_lista_pagamento': '/html/body/div[1]/div/div/div[2]/form/div[13]/div/div/div[1]/select/option[&&NUMBER&&]',
+    # Informar a DATA DO PAGAMENTO
+    'pago_data_pagamento': '//*[@id="Pagamento"]',
     # SALVAR o lançamento SEM FINALIZA-LO
     'salvar': '/html/body/div[1]/div/div/div[3]/button[2]',
     # SALVAR E FINALIZAR o lancamento
     'salvar_finalizar': '/html/body/div[1]/div/div/div[3]/button[3]',
+    # Inserir CONTA FINANCEIRO
+    'conta_financeira': '/html/body/div[1]/div/div/div[2]/form/div[13]/div/div/div[2]/select',
+    # Lista de CONTA FINANCEIRA
+    'lista_conta_financeira': '/html/body/div[1]/div/div/div[2]/form/div[13]/div/div/div[2]/select/option[##NUMBER##]'
 }
