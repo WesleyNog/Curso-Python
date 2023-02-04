@@ -4,22 +4,27 @@ from abc import ABC, abstractmethod
 # Contas devem ter número de Agencia, número da Conta e Saldo
 # Esta e a SuperClasse
 class Conta(ABC):
-    def __init__(self, agencia, conta, saldo=0):
+    def __init__(self, agencia, conta, saldo=0) -> None:
         self.agencia = agencia
         self.conta = conta
         self.saldo = saldo
     
     # Este método e abstrato e usando a técnica de polimorfismo
     @abstractmethod
-    def sacar(self, valor): ...
+    def sacar(self, valor: float) -> float: ...
         
 
-    def depositar(self, valor):
+    def depositar(self, valor: float) -> float:
         self.saldo += valor
         self.detalhes(f'(DEPÓSITO {valor})')
 
-    def detalhes(self, msg=''):
+    def detalhes(self, msg: str = '') -> None:
         print(f'O seu saldo é {self.saldo:.2f} {msg}')
+
+    def __repr__(self):
+        class_name = type(self).__name__
+        attrs = f'({self.agencia!r}, {self.conta!r}, {self.saldo!r})'
+        return f'{class_name}{attrs}'
 
 
 class ContaPoupanca(Conta):
@@ -51,6 +56,12 @@ class ContaCorrente(Conta):
         print('Não foi possível sacar o valor desejado')
         print(f'Seu limite é {-self.limite:.2f}')
         self.detalhes(f'(SAQUE NEGADO {valor})')
+
+    def __repr__(self):
+        class_name = type(self).__name__
+        attrs = f'({self.agencia!r}, {self.conta!r}, {self.saldo!r}, '\
+            f'{self.limite!r})'
+        return f'{class_name}{attrs}'
 
 if __name__ == '__main__':
     # cp1 = ContaPoupanca(111, 222, 0)
