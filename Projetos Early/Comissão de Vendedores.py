@@ -15,8 +15,8 @@ def calculo(vendedora, venda):
 
 def resultado():
     print()
-    print(f'O total da {loja} é R$ {sum(total_venda):.2f}')
-    print(f'A comissão da {loja} é R$ {sum(total_venda) * 0.015:.2f}')
+    print(f'O total da KEDMA é R$ {sum(total_venda):.2f}')
+    print(f'A comissão da KEDMA é R$ {sum(total_venda) * comissao(sum(total_venda)):.2f}')
     print('Fim!')
 
 def calcular_comissao(venda):
@@ -56,6 +56,6 @@ while y < qnt_vendedora:
     y += 1
 
 for a, b in zip(vendedoras, total_venda):
-    texto += f'\nA comissão de {a} é R$ {b * comissao(venda):.2f}'
+    texto += f'\nA comissão de {a} é R$ {b * comissao(b):.2f}'
 print(texto)
 resultado()
