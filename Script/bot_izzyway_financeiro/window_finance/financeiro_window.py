@@ -1,10 +1,13 @@
 import sys
 import os
+import platform
 from pathlib import Path
 from PyQt6.QtWidgets import QApplication, QPushButton, QWidget, QLabel, QLineEdit, QFileDialog
 from PyQt6.QtWidgets import QProgressBar, QCheckBox
 from PyQt6.QtGui import QIcon, QPixmap, QMovie
 from PyQt6.QtCore import QSize, Qt, QTimer
+
+
 
 
 class AppFinanceiroBriejer:
@@ -21,7 +24,8 @@ class AppFinanceiroBriejer:
         # )
 
         ## Variável boleano para checar se o usuário está ou não logado e liberar as funções ##
-        self.login_checked = False
+        self.LOGIN_CHECKED = False
+        self.VALID_MAIL = ['@', '.com']
 
         ## Elementos informar o LOGIN do USUARIO ##
         self.login_name = QLabel('LOGIN', self.window)
@@ -133,9 +137,9 @@ class AppFinanceiroBriejer:
         self.label_log_error.resize(312, 150)
         self.label_log_error.move(325, 133)
 
-         ## Botão para procurar um arquivo Excel ##
+        ## Botão para procurar um arquivo Excel ##
         self.button_seach = QPushButton(self.window)
-        self.button_seach.setEnabled(False)
+        self.button_seach.setEnabled(self.LOGIN_CHECKED)
         self.button_seach.setGeometry(570, 290, 70, 30)
         self.button_seach.clicked.connect(self.choose_file)
         self.button_seach.setIcon(QIcon('excel.png'))
@@ -149,7 +153,6 @@ class AppFinanceiroBriejer:
                 font-size: 13px;
                 padding: 3px;
             }
-
             QPushButton:hover {
                 background-color: #C4DDC5;
             }
@@ -158,7 +161,7 @@ class AppFinanceiroBriejer:
         
         ## Botão para começar a roda o códiigo ##
         self.button_go = QPushButton('Start!', self.window)
-        self.button_go.setEnabled(False)
+        self.button_go.setEnabled(self.LOGIN_CHECKED)
         self.button_go.setGeometry(290, 323, 70, 50)
         self.button_go.setStyleSheet(
             '''
@@ -169,7 +172,6 @@ class AppFinanceiroBriejer:
                 font-size: 13px;
                 padding: 3px;
             }
-
             QPushButton:hover {
                 background-color: #f8d573;
                 color: black;
@@ -200,7 +202,7 @@ class AppFinanceiroBriejer:
 
         ## Este e uma caixa de checagem para adicionar ou não um e-mail à ser enviado ##
         self.check_box_save = QCheckBox('Enviar por e-mail?', self.window)
-        self.check_box_save.setEnabled(False)
+        self.check_box_save.setEnabled(self.LOGIN_CHECKED)
         self.send_mail = QLineEdit('@briejer.com.br', self.window)
         self.send_mail.returnPressed.connect(self.start)
         self.send_mail.setVisible(False)
@@ -223,7 +225,7 @@ class AppFinanceiroBriejer:
         self.mail_sucess.setVisible(False)
 
         self.progress_bar = QProgressBar(self.window)
-        self.progress_bar.setGeometry(230, 77, 190, 30)
+        self.progress_bar.setGeometry(230, 88, 195, 10)
         self.progress_bar.setValue(0)
         self.progress_bar.setVisible(False)
         self.timer = QTimer()
@@ -237,27 +239,39 @@ class AppFinanceiroBriejer:
 
     def set_login(self):
         if len(self.send_login.text()) and len(self.send_password.text()) != 0:
-            self.label_log_sucess.setText('LOGIN realizado com Sucesso!')
-            self.login_checked = True
-            self.button_seach.setEnabled(True)
-            self.button_go.setEnabled(True)
-            self.check_box_save.setEnabled(True)
-            self.send_mail.setText(self.send_login.text())
+            if self.VALID_MAIL[0] in self.send_login.text() and \
+            self.VALID_MAIL[1] in self.send_login.text().lower() and \
+            len(self.send_login.text()) >= 8 and self.send_login.text().find(self.VALID_MAIL[0]) > 0 and \
+            self.send_login.text().lower().find(self.VALID_MAIL[1]) > 0:
+                self.label_log_sucess.setText('LOGIN realizado com SUCESSO!')
+                self.LOGIN_CHECKED = True
+                self.button_seach.setEnabled(True)
+                self.button_go.setEnabled(True)
+                self.check_box_save.setEnabled(True)
+                self.send_mail.setText(self.send_login.text().lower())
+                self.label_log_error.setText('')
+            else:
+                self.label_log_error.setText('LOGIN fora do PADRÃO')
         else:
-            self.label_log_error.setText('LOGIN e/ou SENHA inválidos')
+            self.label_log_error.setText('LOGIN e SENHA são OBRIGATÓRIOS')
 
 
     def choose_file(self):
         file_name = QFileDialog.getOpenFileName()
         path_file = file_name[0]
         if file_name:
-            self.excel_path.setText(path_file)
+            if platform.system() == 'Windows':
+                new_path_file = path_file.replace('/', '\\')
+                self.excel_path.setText(new_path_file)
+            else:
+                self.excel_path.setText(path_file)
 
 
     ## Método para dar início ao código (BOT) ##
     def start(self):
         if not self.check_box_save.isChecked():
             if len(self.excel_path.text()) != 0:
+                self.LOGIN_CHECKED = False
                 self.label_log_sucess.setText(self.excel_path.text())
                 self.progress_bar.setVisible(True)
                 self.timer.start(self.qnt)
@@ -265,11 +279,11 @@ class AppFinanceiroBriejer:
             else:
                 self.label_log_error.setText('ABRA UM ARQUIVO EXCEL VÁLIDO!')
         else:
-            valid_mail = ['@', '.com']
-            if valid_mail[0] in self.send_mail.text() and \
-            valid_mail[1] in self.send_mail.text() and \
+            if self.VALID_MAIL[0] in self.send_mail.text() and \
+            self.VALID_MAIL[1] in self.send_mail.text() and \
             len(self.send_mail.text()) != 0:
                 if len(self.excel_path.text()) != 0:
+                    self.LOGIN_CHECKED = False
                     self.label_log_sucess.setText(self.excel_path.text())
                     self.progress_bar.setVisible(True)
                     self.timer.start(self.qnt)
