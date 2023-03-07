@@ -23,20 +23,29 @@ option = webdriver.FirefoxOptions()
 option.add_argument('--headless')
 
 # Arquivo que será usado para fazer todos os lançamentos necessários
-ARQUIVO = 'Y:\\AUTOMAÇÃO\\Contas a Pagar.xlsx'
+ARQUIVO = 'Y:\\AUTOMAÇÃO\\Contas a Pagar - Lucas.xlsx'
 LER = pd.read_excel(ARQUIVO)
 LOG = 'Y:\\AUTOMAÇÃO\\log_contas.txt'
 
 
 class RoboIzzyWay:
     def __init__(self) -> None:
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Firefox(options=option)
         #self.driver = webdriver.Chrome(options=option)
         self.qnt_lancamento = len(LER)
-
     
-    # Fazer Login do usuário
-    def logar(self, user, passoword):
+
+    # Fazer Login do Usuário
+    def logar_user(self, user='adm4@briejer.com.br', passoword='226212'):
+        send_login = self.driver.find_element(By.XPATH, '//*[@id="UserName"]').send_keys(user)
+        send_pass = self.driver.find_element(By.XPATH, '//*[@id="Password"]').send_keys(passoword, Keys.ENTER)
+        sleep(10)
+        get_user_name = self.driver.find_element(By.XPATH, '//*[@id="UsuarioLogado"]').text
+        self.driver.quit()
+        return get_user_name
+
+    # Fazer Login do BOT
+    def logar_bot(self, user, passoword):
         send_login = self.driver.find_element(By.XPATH, '//*[@id="UserName"]').send_keys(user)
         send_pass = self.driver.find_element(By.XPATH, '//*[@id="Password"]').send_keys(passoword, Keys.ENTER)
         
@@ -64,6 +73,7 @@ class RoboIzzyWay:
         access_cp = self.driver.find_element(By.XPATH, cp_xpaths['contas_pagar']).click()
         sleep(10)
     
+    #############TESTANDO MÉDOTO################
     def find_xpath(self, xpath):
         return WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located((By.XPATH, xpath))
@@ -160,9 +170,9 @@ class RoboIzzyWay:
 
 
     def send_mail(self, email, dia_hora):
-        sender_email = "###################"
+        sender_email = "############"
         receiver_email = email
-        password = "#########"
+        password = "###########"
 
         msg = MIMEMultipart()
         msg['From'] = sender_email
