@@ -8,8 +8,6 @@ from PyQt6.QtGui import QIcon, QPixmap, QMovie
 from PyQt6.QtCore import QSize, Qt, QTimer
 
 
-
-
 class AppFinanceiroBriejer:
     def __init__(self) -> None:
         self.app = QApplication(sys.argv)
