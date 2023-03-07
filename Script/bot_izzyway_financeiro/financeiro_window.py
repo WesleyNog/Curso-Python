@@ -6,6 +6,12 @@ from PyQt6.QtWidgets import QApplication, QPushButton, QWidget, QLabel, QLineEdi
 from PyQt6.QtWidgets import QProgressBar, QCheckBox
 from PyQt6.QtGui import QIcon, QPixmap, QMovie
 from PyQt6.QtCore import QSize, Qt, QTimer
+import class_robot
+
+URL = 'https://app.izzyway.com.br/Account/Login#'
+
+BOT = class_robot.RoboIzzyWay()
+BOT.driver.get(URL)
 
 
 class AppFinanceiroBriejer:
@@ -22,7 +28,6 @@ class AppFinanceiroBriejer:
         # )
 
         ## Variável boleano para checar se o usuário está ou não logado e liberar as funções ##
-        self.LOGIN_CHECKED = False
         self.VALID_MAIL = ['@', '.com']
 
         ## Elementos informar o LOGIN do USUARIO ##
@@ -137,7 +142,7 @@ class AppFinanceiroBriejer:
 
         ## Botão para procurar um arquivo Excel ##
         self.button_seach = QPushButton(self.window)
-        self.button_seach.setEnabled(self.LOGIN_CHECKED)
+        self.button_seach.setEnabled(False)
         self.button_seach.setGeometry(570, 290, 70, 30)
         self.button_seach.clicked.connect(self.choose_file)
         self.button_seach.setIcon(QIcon('excel.png'))
@@ -159,7 +164,7 @@ class AppFinanceiroBriejer:
         
         ## Botão para começar a roda o códiigo ##
         self.button_go = QPushButton('Start!', self.window)
-        self.button_go.setEnabled(self.LOGIN_CHECKED)
+        self.button_go.setEnabled(False)
         self.button_go.setGeometry(290, 323, 70, 50)
         self.button_go.setStyleSheet(
             '''
@@ -200,7 +205,7 @@ class AppFinanceiroBriejer:
 
         ## Este e uma caixa de checagem para adicionar ou não um e-mail à ser enviado ##
         self.check_box_save = QCheckBox('Enviar por e-mail?', self.window)
-        self.check_box_save.setEnabled(self.LOGIN_CHECKED)
+        self.check_box_save.setEnabled(False)
         self.send_mail = QLineEdit('@briejer.com.br', self.window)
         self.send_mail.returnPressed.connect(self.start)
         self.send_mail.setVisible(False)
@@ -241,11 +246,13 @@ class AppFinanceiroBriejer:
             self.VALID_MAIL[1] in self.send_login.text().lower() and \
             len(self.send_login.text()) >= 8 and self.send_login.text().find(self.VALID_MAIL[0]) > 0 and \
             self.send_login.text().lower().find(self.VALID_MAIL[1]) > 0:
-                self.label_log_sucess.setText('LOGIN realizado com SUCESSO!')
-                self.LOGIN_CHECKED = True
+                BOT.logar_user(self.send_login.text(), self.send_password.text())
+                self.label_log_sucess.setText('LOGIN efetuado com SUCESSO!')
                 self.button_seach.setEnabled(True)
                 self.button_go.setEnabled(True)
                 self.check_box_save.setEnabled(True)
+                self.send_login.setEnabled(False)
+                self.send_password.setEnabled(False)
                 self.send_mail.setText(self.send_login.text().lower())
                 self.label_log_error.setText('')
             else:
@@ -255,7 +262,7 @@ class AppFinanceiroBriejer:
 
 
     def choose_file(self):
-        file_name = QFileDialog.getOpenFileName()
+        file_name = QFileDialog.getOpenFileName(None, 'Procurar Planilha', '', '*.xlsx *.xls')
         path_file = file_name[0]
         if file_name:
             if platform.system() == 'Windows':
@@ -269,7 +276,9 @@ class AppFinanceiroBriejer:
     def start(self):
         if not self.check_box_save.isChecked():
             if len(self.excel_path.text()) != 0:
-                self.LOGIN_CHECKED = False
+                self.button_seach.setEnabled(False)
+                self.button_go.setEnabled(False)
+                self.check_box_save.setEnabled(False)
                 self.label_log_sucess.setText(self.excel_path.text())
                 self.progress_bar.setVisible(True)
                 self.timer.start(self.qnt)
@@ -281,7 +290,6 @@ class AppFinanceiroBriejer:
             self.VALID_MAIL[1] in self.send_mail.text() and \
             len(self.send_mail.text()) != 0:
                 if len(self.excel_path.text()) != 0:
-                    self.LOGIN_CHECKED = False
                     self.label_log_sucess.setText(self.excel_path.text())
                     self.progress_bar.setVisible(True)
                     self.timer.start(self.qnt)
