@@ -36,7 +36,7 @@ class RoboIzzyWay:
     
 
     # Fazer Login do Usuário
-    def logar_user(self, user='adm4@briejer.com.br', passoword='226212'):
+    def logar_user(self, user='#########', passoword='#########'):
         send_login = self.driver.find_element(By.XPATH, '//*[@id="UserName"]').send_keys(user)
         send_pass = self.driver.find_element(By.XPATH, '//*[@id="Password"]').send_keys(passoword, Keys.ENTER)
         sleep(10)
