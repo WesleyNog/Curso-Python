@@ -270,14 +270,13 @@ class AppFinanceiroBriejer:
 
     def choose_file(self):
         file_name = QFileDialog.getOpenFileName(None, 'Procurar Planilha', '', '*.xlsx *.xls')
-        path_file = file_name[0]
-        if file_name:
-            if platform.system() == 'Windows':
-                new_path_file = path_file.replace('/', '\\')
-                self.excel_path.setText(new_path_file)
-            else:
-                self.excel_path.setText(path_file)
+        if not file_name:
+            return
 
+        path_file = file_name[0]
+        if platform.system() == 'Windows':
+            path_file = path_file.replace('/', '\\')
+        self.excel_path.setText(path_file)
 
     ## Método para dar início ao código (BOT) ##
     def start(self):
