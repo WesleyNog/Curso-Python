@@ -22,17 +22,11 @@ option = webdriver.FirefoxOptions()
 #option = webdriver.ChromeOptions()
 option.add_argument('--headless')
 
-# Arquivo que será usado para fazer todos os lançamentos necessários
-ARQUIVO = 'Y:\\AUTOMAÇÃO\\Contas a Pagar - Lucas.xlsx'
-LER = pd.read_excel(ARQUIVO)
-LOG = 'Y:\\AUTOMAÇÃO\\log_contas.txt'
-
 
 class RoboIzzyWay:
     def __init__(self) -> None:
         self.driver = webdriver.Firefox(options=option)
         #self.driver = webdriver.Chrome(options=option)
-        self.qnt_lancamento = len(LER)
     
 
     # Fazer Login do Usuário

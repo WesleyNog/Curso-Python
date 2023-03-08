@@ -1,6 +1,7 @@
 import sys
 import os
 import platform
+import pandas as pd
 from pathlib import Path
 from PyQt6.QtWidgets import QApplication, QPushButton, QWidget, QLabel, QLineEdit, QFileDialog
 from PyQt6.QtWidgets import QProgressBar, QCheckBox
@@ -12,6 +13,12 @@ URL = 'https://app.izzyway.com.br/Account/Login#'
 
 BOT = class_robot.RoboIzzyWay()
 BOT.driver.get(URL)
+
+# Arquivo que será usado para fazer todos os lançamentos necessários
+ARQUIVO = 'Y:\\AUTOMAÇÃO\\Contas a Pagar - Lucas.xlsx'
+LER = pd.read_excel(ARQUIVO)
+LOG = 'Y:\\AUTOMAÇÃO\\log_contas.txt'
+QNT_LANCAMENTO = len(LER)
 
 
 class AppFinanceiroBriejer:

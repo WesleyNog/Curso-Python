@@ -12,7 +12,7 @@ EMAIL = '##################'
 robo = cb.RoboIzzyWay()
 robo.driver.get(URL)
 
-robo.logar(LOGIN, PASSOWORD)
+robo.logar_bot(LOGIN, PASSOWORD)
 print('Logando...')
 sleep(10)
 try:
