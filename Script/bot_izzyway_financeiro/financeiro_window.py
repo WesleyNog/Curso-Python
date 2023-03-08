@@ -15,10 +15,10 @@ BOT = class_robot.RoboIzzyWay()
 BOT.driver.get(URL)
 
 # Arquivo que será usado para fazer todos os lançamentos necessários
-ARQUIVO = 'Y:\\AUTOMAÇÃO\\Contas a Pagar - Lucas.xlsx'
-LER = pd.read_excel(ARQUIVO)
-LOG = 'Y:\\AUTOMAÇÃO\\log_contas.txt'
-QNT_LANCAMENTO = len(LER)
+# self.ARQUIVO = self.path_file
+# self.LER = pd.read_excel(ARQUIVO)
+# self.LOG = ARQUIVO.replace('.xlsx', 'txt')
+# self.QNT_LANCAMENTO = len(LER)
 
 
 class AppFinanceiroBriejer:
@@ -278,9 +278,10 @@ class AppFinanceiroBriejer:
         if platform.system() == 'Windows':
             path_file = path_file.replace('/', '\\')
         self.excel_path.setText(path_file)
+        self.path_file = path_file
 
     ## Método para dar início ao código (BOT) ##
-    def start(self):
+    def start(self, funcao=None):
         if not self.check_box_save.isChecked():
             if len(self.excel_path.text()) != 0:
                 self.button_seach.setEnabled(False)
@@ -324,6 +325,9 @@ class AppFinanceiroBriejer:
             self.send_mail.setVisible(False)
 
     def get_user_name(self):
+        ...
+
+    def isChecked(ischecked):
         ...
 
 
