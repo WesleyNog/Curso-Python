@@ -25,6 +25,7 @@ class AppFinanceiroBriejer:
     def __init__(self) -> None:
         self.app = QApplication(sys.argv)
         self.window = QWidget()
+        self.path_file = None
 
     def window_create(self, func=None):
         self.window.setWindowTitle('Briejer - Lançamentos [CONTAS A PAGAR]')
