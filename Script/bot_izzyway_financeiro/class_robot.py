@@ -23,23 +23,31 @@ option = webdriver.FirefoxOptions()
 option.add_argument('--headless')
 
 
+
 class RoboIzzyWay:
     def __init__(self) -> None:
         self.driver = webdriver.Firefox(options=option)
         #self.driver = webdriver.Chrome(options=option)
+        self.GET_NAME_USER = None
+        self.LOG = None
+        self.LER = None
+        self.QNT_LANCAMENTO = None
     
 
     # Fazer Login do Usuário
-    def logar_user(self, user='#########', passoword='#########'):
-        send_login = self.driver.find_element(By.XPATH, '//*[@id="UserName"]').send_keys(user)
-        send_pass = self.driver.find_element(By.XPATH, '//*[@id="Password"]').send_keys(passoword, Keys.ENTER)
-        sleep(10)
-        get_user_name = self.driver.find_element(By.XPATH, '//*[@id="UsuarioLogado"]').text
-        self.driver.quit()
-        return get_user_name
+    def logar_user(self, user=None, passoword=None):
+        try:
+            send_login = self.driver.find_element(By.XPATH, '//*[@id="UserName"]').send_keys(user)
+            send_pass = self.driver.find_element(By.XPATH, '//*[@id="Password"]').send_keys(passoword, Keys.ENTER)
+            sleep(5)
+            self.GET_NAME_USER = self.driver.find_element(By.XPATH, '//*[@id="UsuarioLogado"]').text
+            self.driver.quit()
+        except Exception:
+            self.driver.quit()
+
 
     # Fazer Login do BOT
-    def logar_bot(self, user, passoword):
+    def logar_bot(self, user="###########", passoword='#######'):
         send_login = self.driver.find_element(By.XPATH, '//*[@id="UserName"]').send_keys(user)
         send_pass = self.driver.find_element(By.XPATH, '//*[@id="Password"]').send_keys(passoword, Keys.ENTER)
         
