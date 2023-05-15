@@ -13,5 +13,5 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle('Calculadora de WeS')
 
-    def addToVLayout(self, widget: QWidget):
+    def addWidgetToVLayout(self, widget: QWidget):
         self.vLayout.addWidget(widget)
