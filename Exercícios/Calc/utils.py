@@ -6,5 +6,15 @@ def isNumOrDot(string: str):
     return bool(NUM_OR_DOT_REGEX.search(string))
 
 
+def isValid(string: str):
+    valid = False
+    try:
+        float(string)
+        valid = True
+    except ValueError:
+        valid = False
+    return valid
+
+
 def isEmpty(string: str):
     return len(string) == 0

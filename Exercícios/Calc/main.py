@@ -23,7 +23,7 @@ if __name__ == '__main__':
     window.addWidgetToVLayout(display)
 
     # Grid
-    grid = buttonsGrid(display)
+    grid = buttonsGrid(display, informer)
     window.vLayout.addLayout(grid)
 
     window.setWindowIcon(icon)
