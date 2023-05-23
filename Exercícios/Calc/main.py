@@ -3,7 +3,7 @@ from PyQt6.QtGui import QIcon
 from main_window import MainWindow
 from variables import WINDOW_ICON
 from main_display import Display
-from buttons import Button, buttonsGrid
+from buttons import buttonsGrid
 from info import Info
 import sys
 
@@ -28,7 +28,8 @@ if __name__ == '__main__':
 
     window.setWindowIcon(icon)
     app.setWindowIcon(icon)
-
+    
+    window.adjustFixedSize()
     window.show()
     app.exec()
     
