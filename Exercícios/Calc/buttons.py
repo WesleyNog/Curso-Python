@@ -6,6 +6,7 @@ import math
 
 if TYPE_CHECKING:
     from main_display import Display
+    from main_window import MainWindow
     from info import Info
 
 class Button(QPushButton):
@@ -22,7 +23,7 @@ class Button(QPushButton):
         self.setMinimumSize(75, 75)
 
 class buttonsGrid(QGridLayout):
-    def __init__(self, display: 'Display', info: 'Info', *args, **kwargs) -> None:
+    def __init__(self, display: 'Display', info: 'Info', window: 'MainWindow', *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self._gridMask = [
@@ -35,6 +36,7 @@ class buttonsGrid(QGridLayout):
 
         self.display = display
         self.info = info
+        self.window = window
         self._equation = ''
         self._equationInitialValue = 'Sua Conta'
         self._left = None
@@ -76,6 +78,9 @@ class buttonsGrid(QGridLayout):
         if text == 'C':
             self._connectClicked(button, self._clear)
         
+        if text == '◀️':
+            self._connectClicked(button, self.display.backspace)
+        
         if text in '+-/*ˆ':
             self._connectClicked(
                 button,
@@ -113,6 +118,7 @@ class buttonsGrid(QGridLayout):
         self.display.clear()
 
         if not isValid(displayText) and self._left is None:
+            self._showError('Você não digitou nada!')
             return
         
         if self._left is None:
@@ -126,6 +132,7 @@ class buttonsGrid(QGridLayout):
         displayText = self.display.text()
 
         if not isValid(displayText):
+            self._showError('Conta incompleta.')
             return
 
         self._right = float(displayText)
@@ -138,9 +145,9 @@ class buttonsGrid(QGridLayout):
             else:
                 result = round(eval(self.equation), 2)
         except ZeroDivisionError:
-            result
+            self._showError('Divisão por Zero.')
         except OverflowError:
-            result
+            self._showError('Número muito grande.')
 
         self.display.clear()
         self.info.setText(f'{self.equation} = {result}')
@@ -149,3 +156,15 @@ class buttonsGrid(QGridLayout):
 
         if result == 'error':
             self._left = None
+
+    def _showError(self, text):
+        msgBox = self.window.makeMsgBox()
+        msgBox.setText(text)
+        msgBox.setIcon(msgBox.Icon.Critical)
+        msgBox.exec()
+
+    def _showInfo(self, text):
+        msgBox = self.window.makeMsgBox()
+        msgBox.setText(text)
+        msgBox.setIcon(msgBox.Icon.Warning)
+        msgBox.exec()
