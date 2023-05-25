@@ -87,7 +87,7 @@ class buttonsGrid(QGridLayout):
                 self._makeSlot(self._operatorClicked, button)
             )
         
-        if text in '=':
+        if text == '=':
             self._connectClicked(button, self. _eq)
 
     def _makeSlot(self, func, *args, **kwargs):
@@ -168,3 +168,4 @@ class buttonsGrid(QGridLayout):
         msgBox.setText(text)
         msgBox.setIcon(msgBox.Icon.Warning)
         msgBox.exec()
+
