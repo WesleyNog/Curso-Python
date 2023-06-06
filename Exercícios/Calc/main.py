@@ -1,5 +1,5 @@
-from PyQt6.QtWidgets import QApplication, QLabel
-from PyQt6.QtGui import QIcon
+from PySide6.QtWidgets import QApplication, QLabel
+from PySide6.QtGui import QIcon
 from main_window import MainWindow
 from variables import WINDOW_ICON
 from main_display import Display

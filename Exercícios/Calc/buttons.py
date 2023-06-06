@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from PyQt6.QtWidgets import QPushButton, QGridLayout, QWidget
+from PySide6.QtWidgets import QPushButton, QGridLayout, QWidget
 from variables import MEDIUM_FONT_SIZE
 from utils import isEmpty, isNumOrDot, isValid
 import math
