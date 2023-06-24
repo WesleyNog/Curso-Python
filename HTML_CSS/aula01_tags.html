@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula sobre TAGS</title>
+
+    <style>
+        .img-in-text {
+            width: 80px;
+            height: 50px;
+        }
+
+        .span-red {
+            font-size: 24px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cabeçalho</h1>
+    <p><b>Lorem</b> <strong>ipsum</strong> <i>dolor</i> <em>sit</em> 
+        
+        <a href="https://pt.wikipedia.org/wiki/Lorem_ipsum" target="_blank">amet</a>
+        <a href="https://pt.wikipedia.org/wiki/Lorem_ipsum" target="_blank">
+            <img class="img-in-text" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNgFXcDSJOXWsKQ1zbOyHo7WFIpwVk-wxRFw&usqp=CAU" alt="Logo do Wikipedia">
+        </a> 
+        
+        <del>Saiu!</del> <ins>Entrou!</ins> <s>consectetur</s> <u>adipisicing</u> elit. <br>
+        Laborum, 2<sup>2</sup>, H<sub>2</sub>O quod pariatur <small>nobis</small> porro <q>dolorem</q> expedita blanditiis <br>
+        architecto fugit harum aperiam. Neque, <br>
+        amet modi quod molestias mollitia cum sapiente repudiandae? Dignissimos.
+    </p>
+    <blockquote cite="https://pt.wikipedia.org/wiki/Citação">
+        <p>
+        Aqui é um bloco de citação!
+        </p>
+    </blockquote>
+
+    <hr>
+
+    <p>
+        <span class="span-red">Lorem</span> ipsum <code>console.log</code>, dolor sit amet consectetur adipisicing elit. <br>
+        Quam rem quod assumenda deserunt officiis dolorem nam, porro dolore cumque. <br>
+        Eaque, voluptas! Atque nemo quaerat ab dolore. Ut doloribus assumenda recusandae. <br>
+    </p>
+    <blockquote>
+        <pre><code>
+            while True:
+                comando = adicionar(input('Digite um comando: ').lower())
+                if 'sair' in lista:
+                    break
+
+
+                undo_redo(comando)
+                
+                if 'desfazer' in lista:
+                    lista.remove('desfazer')
+                elif 'refazer' in lista:
+                    lista.remove('refazer')
+
+                print(*lista, sep='\n')
+                print()
+            </code></pre>
+    </blockquote>
+</body>
+</html>
