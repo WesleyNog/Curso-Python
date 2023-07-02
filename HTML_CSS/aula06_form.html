@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula sobre Formulários</title>
+
+    <style>
+        body {
+            font-family: system-ui, 
+            -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+            Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 
+            'Helvetica Neue', sans-serif;
+        }
+
+        label {
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+<body>
+    <!-- <section>
+        <form action="#" method="get" target="_blank">
+            <h1>Título do Formulário</h1>
+            <p>Formulário</p>
+            <fieldset>
+                <legend>Descrição</legend>
+                <p>
+                    <input type="Nome">
+                </p>
+            </fieldset>
+        </form>
+    </section> -->
+    <form action="#" method="get" target="_blank">
+        <p>Meu Formulário</p>
+        <p>
+            <label for="nome">Nome: </label>
+            <input type="text" id="nome" name="
+            nome" placeholder="Digite seu Nome" required>
+        </p>
+        
+        <p>
+            <label for="dev">Back-end: </label>
+            <input type="checkbox" id="dev" name="
+            dev" value="sim"><br>
+            <label for="dev">Front-end: </label>
+            <input type="checkbox" id="dev" name="
+            dev" value="sim"><br>
+            <label for="dev">Ful Stack: </label>
+            <input type="checkbox" id="dev" name="
+            dev" value="sim">
+        </p>
+        
+        <p>
+            Gênero: <br>
+            <label for="Feminino">Feminino: </label>
+            <input type="radio" id="Feminino" name="
+            genero" value="Feminino"><br>
+            <label for="Masculino">Masculino: </label>
+            <input type="radio" id="Masculino" name="
+            genero" value="Masculino"><br>
+            <label for="Nao responder">Não Responder: </label>
+            <input type="radio" id="Nao responder" name="
+            genero" value="Nao responder">
+        </p>
+
+        <p>
+            <button type="reset">Resetar</button>
+            <button type="submit">Enviar</button>
+        </p>
+    </form>
+</body>
+</html>
