@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste DJANGO</title>
-</head>
-<body>
-    <h1>AULAS DJANGO</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima dolorum delectus quas dolorem? Libero maiores esse eum quo quibusdam ratione sed! Necessitatibus repellendus molestias praesentium commodi odio, magni similique totam?</p>
-</body>
-</html>
+{% extends 'global/base.html' %}
+
+{% block texto %} {{ text }} {% endblock texto %}

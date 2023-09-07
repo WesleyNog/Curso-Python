@@ -3,13 +3,26 @@ from django.shortcuts import render
 
 
 def blog(request):
+
+    context = {
+            'text': 'OLÁ BLOG'
+        }
+    
     return render(
         request,
-        'blog.html'
+        'blog.html',
+        context
     )
 
 def exemplo(request):
+
+    context = {
+            'text': 'OLÁ EXEMPLO',
+            'title': 'Página de Exemplo - '
+        }
+    
     return render(
         request,
-        'exemplo.html'
+        'exemplo.html',
+        context
     )
