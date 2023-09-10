@@ -1,11 +1,11 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
-
+from blog.data import response
 
 def blog(request):
 
     context = {
-            'text': 'OLÁ BLOG'
+            'text': 'OLÁ BLOG',
+            'posts': response
         }
     
     return render(
