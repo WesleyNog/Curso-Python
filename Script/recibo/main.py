@@ -3,13 +3,13 @@ import pandas as PD
 from datetime import datetime
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from gerar_recibo import criar_recibo
+from gerar_recibo import criar_recibo, divisor_line
 
 mult = 0
 count = 1
 current_date = datetime.now().strftime('%d/%m/%Y')
 # Inicializar o canvas (a página PDF)
-c = canvas.Canvas(os.path.join(os.getcwd(), 'recibo.pdf'), pagesize=A4)
+c = canvas.Canvas(os.path.join(os.getcwd(), f'recibo - {current_date.replace("/", "_")}.pdf'), pagesize=A4)
 
 # Lendo o arquivo Excel
 excel = PD.read_excel(os.path.join(os.getcwd(), 'FOLHA EXTRA JANEIRO 2024.xlsx'))
@@ -36,6 +36,7 @@ for indice, linha in df_excel.iterrows():
             count += 1
         else:
             criar_recibo(c, nome, f'{valor:.2f}', current_date, empresa, cnpj, endereco, mult)
+            divisor_line(c)
             c.showPage()
             mult = 0
             count = 1
@@ -44,6 +45,6 @@ for indice, linha in df_excel.iterrows():
 c.save()
 os_name = os.name
 if os_name == 'nt':
-    os.system(f'start recibo.pdf')  # Windows
+    os.system(f'start recibo - {current_date.replace("/", "_")}.pdf')  # Windows
 else:
-    os.system(f'open recibo.pdf')  # Linux/macOS
+    os.system(f'open recibo - {current_date.replace("/", "_")}.pdf')  # Linux/macOS

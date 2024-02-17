@@ -1,5 +1,12 @@
 import os
+from datetime import datetime
 from num2words import num2words
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+
+current_date = datetime.now().strftime('%d/%m/%Y')
+c = canvas.Canvas(os.path.join(os.getcwd(), 'recibo.pdf'), pagesize=A4)
+
 
 def criar_recibo(c, nome: str, valor: float | int, data: str, empresa: str, cnpj: str, end: str, mult_y: int=0, emissor: str='Tainã da Silva', autorizacao: str='Amanda S. Vilar'):
 
@@ -47,13 +54,24 @@ def criar_recibo(c, nome: str, valor: float | int, data: str, empresa: str, cnpj
 
     # Rodapé
     c.setFont("Helvetica-Bold", 11)
-    c.drawString(155, 507 - mult_y, end)
+    c.drawString(155, 507 - mult_y, end.upper())
     c.drawString(170, 493 - mult_y, 'FORTALEZA-CE Telefone - (85) 3444-4019')
+
+def divisor_line(c):
+    # Linha divisória
+    c.setLineWidth(1)  # Define a largura da linha
+    c.setDash(2, 2)  # Define o padrão da linha pontilhada
+    c.line(25, 435, 570, 435)  # coordenadas x1, y1, x2, y2
 
 
 if __name__ == '__main__':
     # Exemplo de uso
-    criar_recibo('Wesley Nogueira P. da Silva', 100.50, '17/02/2024')
+    criar_recibo(
+        c ,'Wesley Nogueira P. da Silva', 100.50, '17/02/2024', 'WNH Slucions', 
+        '99.999.999/0009-99', 'Rua Testando N 999 - Bairro Teste'
+        )
+    divisor_line(c)
+    c.save()
 
     os_name = os.name
     if os_name == 'nt':
