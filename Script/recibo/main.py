@@ -9,10 +9,10 @@ mult = 0
 count = 1
 current_date = datetime.now().strftime('%d/%m/%Y')
 # Inicializar o canvas (a página PDF)
-c = canvas.Canvas('recibo.pdf', pagesize=A4)
+c = canvas.Canvas(os.path.join(os.getcwd(), 'recibo.pdf'), pagesize=A4)
 
 # Lendo o arquivo Excel
-excel = PD.read_excel('FOLHA EXTRA JANEIRO 2024.xlsx')
+excel = PD.read_excel(os.path.join(os.getcwd(), 'FOLHA EXTRA JANEIRO 2024.xlsx'))
 df_excel = PD.DataFrame(excel)
 qnt_recibo = len(df_excel['VALOR LIQUIDO A RECEBER'])
 
