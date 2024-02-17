@@ -1,7 +1,7 @@
 import os
 from num2words import num2words
 
-def criar_recibo(c, nome, valor, data, empresa: str, cnpj: str, end, mult_y=0, emissor='Tainã da Silva', autorizacao='Amanda S. Vilar'):
+def criar_recibo(c, nome: str, valor: float | int, data: str, empresa: str, cnpj: str, end: str, mult_y: int=0, emissor: str='Tainã da Silva', autorizacao: str='Amanda S. Vilar'):
 
     # Adicionar o título
     c.setFont("Helvetica-Bold", 16)
@@ -19,7 +19,7 @@ def criar_recibo(c, nome, valor, data, empresa: str, cnpj: str, end, mult_y=0, e
     # Corpo do recibo
     c.drawString(75, 770- mult_y, 'Eu, ')
     c.setFont("Helvetica-Bold", 11)
-    c.drawString(100, 770 - mult_y, nome)
+    c.drawString(100, 770 - mult_y, nome.upper())
 
     # Texto do Corpo
     c.setFont("Helvetica", 10)
