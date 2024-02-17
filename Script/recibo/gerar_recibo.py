@@ -1,19 +1,14 @@
 import os
 from num2words import num2words
-from datetime import datetime
 
-EMPRESA = 'MARIA VASCONCELOS DE SOUZA LTDA'
-CNPJ = '51.468.741/0001-32'
-current_date = datetime.now().strftime('%d/%m/%Y')
-
-def criar_recibo(c, nome, valor, data, mult_y=0, emissor='Tainã da Silva', autorizacao='Amanda S. Vilar'):
+def criar_recibo(c, nome, valor, data, empresa: str, cnpj: str, end, mult_y=0, emissor='Tainã da Silva', autorizacao='Amanda S. Vilar'):
 
     # Adicionar o título
     c.setFont("Helvetica-Bold", 16)
     c.drawString(45, 800 - mult_y, "RECIBO DE PAGAMENTO")
     c.setFont("Helvetica", 10)
-    c.drawString(330, 805 - mult_y, EMPRESA)
-    c.drawString(330, 795 - mult_y, CNPJ)
+    c.drawString(330, 805 - mult_y, empresa.upper())
+    c.drawString(330, 795 - mult_y, cnpj)
 
     # Adicionar retângulo
     c.rect(25, 480 - mult_y, 545, 350)  # coordenadas x, y, largura, altura | Retângulo Externo 01
@@ -28,7 +23,7 @@ def criar_recibo(c, nome, valor, data, mult_y=0, emissor='Tainã da Silva', auto
 
     # Texto do Corpo
     c.setFont("Helvetica", 10)
-    c.drawString(60, 740 - mult_y, f'Declaro que recebi da empresa {EMPRESA}')
+    c.drawString(60, 740 - mult_y, f'Declaro que recebi da empresa {empresa.upper()}')
     c.drawString(60, 728 - mult_y, 'A importância de: ')
     c.setFont("Helvetica-Bold", 11)
     c.drawString(145, 728 - mult_y, num2words(valor, lang="pt_BR", to="currency").upper())
@@ -52,13 +47,13 @@ def criar_recibo(c, nome, valor, data, mult_y=0, emissor='Tainã da Silva', auto
 
     # Rodapé
     c.setFont("Helvetica-Bold", 11)
-    c.drawString(155, 507 - mult_y, 'RUA MINISTRO JOAQUIM BASTOS N 380 - FÁTIMA')
+    c.drawString(155, 507 - mult_y, end)
     c.drawString(170, 493 - mult_y, 'FORTALEZA-CE Telefone - (85) 3444-4019')
 
 
 if __name__ == '__main__':
     # Exemplo de uso
-    criar_recibo('Wesley Nogueira P. da Silva', 100.50, current_date)
+    criar_recibo('Wesley Nogueira P. da Silva', 100.50, '17/02/2024')
 
     os_name = os.name
     if os_name == 'nt':
