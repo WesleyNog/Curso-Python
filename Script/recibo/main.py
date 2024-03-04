@@ -1,50 +1,57 @@
 import os
+import math
 import pandas as PD
 from datetime import datetime
-from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from gerar_recibo import criar_recibo, divisor_line
+from reportlab.pdfgen.canvas import Canvas
+from gerar_recibo import create_receipt, divisor_line
 
 mult = 0
 count = 1
 current_date = datetime.now().strftime('%d/%m/%Y')
 # Inicializar o canvas (a página PDF)
-c = canvas.Canvas(os.path.join(os.getcwd(), f'recibo - {current_date.replace("/", "_")}.pdf'), pagesize=A4)
+c = Canvas(os.path.join(os.getcwd(), f'recibo - {current_date.replace("/", "")}.pdf'), pagesize=A4)
 
 # Lendo o arquivo Excel
-excel = PD.read_excel(os.path.join(os.getcwd(), 'FOLHA EXTRA JANEIRO 2024.xlsx'))
+excel = PD.read_excel(os.path.join(os.getcwd(), 'SALARIO - JANEIRO 24.xlsx'))
 df_excel = PD.DataFrame(excel)
-qnt_recibo = len(df_excel['VALOR LIQUIDO A RECEBER'])
+qnt_receipt = len(df_excel['LIQUIDO A RECEBER'])
 
-for indice, linha in df_excel.iterrows():
-    if str(linha['PGTO']).upper() == 'DINHEIRO':
-        nome = linha['EMPREGADO']
-        valor = round(linha['VALOR LIQUIDO A RECEBER'], 2)
-        if str(linha['EMPRESA']).upper() == 'EMPORIO':
-            empresa = 'Empório de Fátima Confeitaria LTDA'
-            cnpj = '11.322.565/0001-01'
-            endereco = 'AV DEPUTADO OSVALDO STUDART N 250 - FÁTIMA'
-        else:
-            empresa = 'Maria Vasconcelos de Souza LTDA'
-            cnpj = '51.468.741/0001-32'
-            endereco = 'RUA MINISTRO JOAQUIM BASTOS N 380 - FÁTIMA'
+for index, line in df_excel.iterrows():
+    try:
+        if not math.isnan(line['LIQUIDO A RECEBER']):
+            name = line['EMPREGADO']
+            value = round(line['LIQUIDO A RECEBER'], 2)
+            if str(line['EMPRESA']).upper() == 'EMPORIO':
+                company = 'Empório de Fátima Confeitaria LTDA'
+                cnpj = '11.322.565/0001-01'
+                adress = 'AV DEPUTADO OSVALDO STUDART N 250 - FÁTIMA'
+            else:
+                company = 'Maria Vasconcelos de Souza LTDA'
+                cnpj = '51.468.741/0001-32'
+                adress = 'RUA MINISTRO JOAQUIM BASTOS N 380 - FÁTIMA'
+            data = line['DATA']
+            emitido = line['EMITIDO']
+            autorizado = line['AUTORIZADO']
+            gerente = line['GERENTE']
 
-
-        if count != 2:
-            criar_recibo(c, nome, f'{valor:.2f}', current_date, empresa, cnpj, endereco, mult)
-            mult += 450
-            count += 1
-        else:
-            criar_recibo(c, nome, f'{valor:.2f}', current_date, empresa, cnpj, endereco, mult)
-            divisor_line(c)
-            c.showPage()
-            mult = 0
-            count = 1
+            if count != 2:
+                create_receipt(c, name, value, data, company, cnpj, adress, gerente, emitido, autorizado, mult)
+                mult += 450
+                count += 1
+            else:
+                create_receipt(c, name, value, data, company, cnpj, adress, gerente, emitido, autorizado, mult)
+                divisor_line(c)
+                c.showPage()
+                mult = 0
+                count = 1
+    except TypeError:
+        pass
 
 # Salvar o PDF
 c.save()
-os_name = os.name
-if os_name == 'nt':
-    os.system(f'start recibo - {current_date.replace("/", "_")}.pdf')  # Windows
-else:
-    os.system(f'open recibo - {current_date.replace("/", "_")}.pdf')  # Linux/macOS
+# os_name = os.name
+# if os_name == 'nt':
+#     os.system(f'start recibo - {current_date.replace("/", "_")}.pdf')  # Windows
+# else:
+#     os.system(f'open recibo - {current_date.replace("/", "_")}.pdf')  # Linux/macOS
